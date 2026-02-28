@@ -1,6 +1,3 @@
-// src/types/script.ts
-// APIのレスポンスの型を定義する
-
 export type Script = {
   id: number
   character: string

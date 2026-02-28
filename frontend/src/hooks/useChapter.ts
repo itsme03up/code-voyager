@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Chapter } from '../types/script'
+import type { Chapter } from '../types/index'
 
 const API_URL = 'http://localhost:8000'
 
