@@ -35,3 +35,8 @@ def create_script(db: Session, chapter_id: int, character: str, text: str, order
     db.commit()
     db.refresh(script)
     return script
+
+
+def get_script(db: Session, script_id: int) -> Script | None:
+    """指定したidのセリフを1件取得する"""
+    return db.query(Script).filter(Script.id == script_id).first()
