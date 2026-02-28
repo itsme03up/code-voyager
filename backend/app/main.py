@@ -2,6 +2,11 @@
 # app/main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.database import engine, Base
+from app.models import script  # モデルをインポートしてテーブルを作成
+
+# テーブルが存在しない場合に自動作成
+Base.metadata.create_all(bind=engine)
 
 # FastAPIアプリケーションのインスタンスを作成
 app = FastAPI(
@@ -10,7 +15,7 @@ app = FastAPI(
     version="0.1.0"
 )
 
-# フロンロントエンド(React)からのリクエストを許可するためのCORS設定
+# フロントエンド(React)からのリクエストを許可するためのCORS設定
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],  # Viteのデフォルトポート
