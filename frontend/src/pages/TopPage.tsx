@@ -1,25 +1,12 @@
 // src/pages/TopPage.tsx
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import type { Chapter } from '../types/index'
+import { useCourses } from '../hooks/useCourses'
 import { SkillTreePage } from './SkillTreePage'
 
-const API_URL = 'http://localhost:8000'
-
 export const TopPage = () => {
-  const [chapters, setChapters] = useState<Chapter[]>([])
-  const [loading, setLoading] = useState(true)
+  const { courses, loading, error } = useCourses()
 
-  useEffect(() => {
-    const fetchChapters = async () => {
-      const response = await axios.get(`${API_URL}/scripts/chapters`)
-      setChapters(response.data)
-      setLoading(false)
-    }
-    fetchChapters()
-  }, [])
+  if (loading) return <p style={{ color: '#e0f7ff', padding: '40px' }}>LOADING...</p>
+  if (error) return <p style={{ color: '#ff4444', padding: '40px' }}>{error}</p>
 
-  if (loading) return <p>読み込み中...</p>
-
-  return <SkillTreePage chapters={chapters} />
+  return <SkillTreePage courses={courses} />
 }

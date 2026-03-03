@@ -1,6 +1,4 @@
 // src/hooks/useChapter.ts
-// 章データをAPIから取得するカスタムフック
-
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import type { Chapter } from '../types/index'
@@ -15,7 +13,7 @@ export const useChapter = (chapterId: number) => {
   useEffect(() => {
     const fetchChapter = async () => {
       try {
-        const response = await axios.get(`${API_URL}/scripts/chapters/${chapterId}`)
+        const response = await axios.get(`${API_URL}/api/chapters/${chapterId}`)
         setChapter(response.data)
       } catch (e) {
         setError('データの取得に失敗しました')
@@ -23,7 +21,6 @@ export const useChapter = (chapterId: number) => {
         setLoading(false)
       }
     }
-
     fetchChapter()
   }, [chapterId])
 

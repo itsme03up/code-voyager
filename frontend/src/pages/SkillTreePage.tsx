@@ -1,16 +1,35 @@
 // src/pages/SkillTreePage.tsx
 import { useNavigate } from 'react-router-dom'
 import { useProgress } from '../hooks/useProgress'
-import type { Chapter } from '../types/index'
+import type { Course } from '../types/index'
 import './SkillTreePage.css'
 
 type Props = {
-  chapters: Chapter[]
+  courses: Course[]
 }
 
-export const SkillTreePage = ({ chapters }: Props) => {
+export const SkillTreePage = ({ courses }: Props) => {
   const navigate = useNavigate()
-  const { isUnlocked, isCompleted } = useProgress()
+  const { isCompleted, progress } = useProgress()
+
+  // コースの最初のチャプターが解放されているか確認
+  const isCourseUnlocked = (course: Course): boolean => {
+    if (course.chapters.length === 0) return false
+    const firstChapter = course.chapters[0]
+
+    // 依存関係がなければ解放済み
+    if (firstChapter.dependency_ids.length === 0) return true
+
+    // 全ての前提チャプターが完了していれば解放
+    return firstChapter.dependency_ids.every((depId) =>
+      progress.completedChapters.includes(depId)
+    )
+  }
+
+  const isCourseCompleted = (course: Course): boolean => {
+    if (course.chapters.length === 0) return false
+    return course.chapters.every((ch) => isCompleted(ch.id))
+  }
 
   return (
     <div className="skilltree-wrapper">
@@ -19,26 +38,22 @@ export const SkillTreePage = ({ chapters }: Props) => {
         <p className="skilltree-subtitle">// SELECT MISSION</p>
       </div>
 
-      <div className="skilltree-nodes">
-        {chapters.map((chapter, index) => {
-          const unlocked = isUnlocked(chapter.id, index)
-          const completed = isCompleted(chapter.id)
+      <div className="skilltree-grid">
+        {courses.map((course) => {
+          const unlocked = isCourseUnlocked(course)
+          const completed = isCourseCompleted(course)
 
           return (
-            <div key={chapter.id} className="skilltree-node-wrapper">
-              {index > 0 && (
-                <div className={`skilltree-line ${unlocked ? 'unlocked' : ''}`} />
-              )}
-              <div
-                className={`skilltree-node ${completed ? 'completed' : ''} ${unlocked && !completed ? 'unlocked' : ''} ${!unlocked ? 'locked' : ''}`}
-                onClick={() => unlocked && navigate(`/chapters/${chapter.id}`)}
-              >
-                <div className="node-icon">
-                  {completed ? '⭐' : unlocked ? '🌐' : '🌑'}
-                </div>
-                <div className="node-title">{chapter.title}</div>
-                {completed && <div className="node-badge">[ CLEAR ]</div>}
-              </div>
+            <div
+              key={course.id}
+              className={`skilltree-node ${completed ? 'completed' : ''} ${unlocked && !completed ? 'unlocked' : ''} ${!unlocked ? 'locked' : ''}`}
+              onClick={() => unlocked && navigate(`/courses/${course.id}`)}
+            >
+              <div className="node-icon">{course.icon}</div>
+              <div className="node-title">{course.title}</div>
+              <div className="node-desc">{course.description}</div>
+              {completed && <div className="node-badge">[ CLEAR ]</div>}
+              {!unlocked && <div className="node-lock">🔒</div>}
             </div>
           )
         })}
