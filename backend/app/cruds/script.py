@@ -37,6 +37,11 @@ def get_terminals_by_chapter(db: Session, chapter_id: int) -> list[Terminal]:
     )
 
 
+def get_all_courses(db: Session) -> list[Course]:
+    """全コースを表示順で取得する"""
+    return db.query(Course).order_by(Course.order).all()
+
+
 def get_course(db: Session, course_id: int) -> Course | None:
     """指定したコースを取得する"""
     return db.query(Course).filter(Course.id == course_id).first()
@@ -63,15 +68,14 @@ def get_chapter_dependencies(db: Session, chapter_id: int) -> list[int]:
 
 
 def create_course(
-    db: Session, chapter_id: int, question: str, explanation: str | None, order: int
-) -> Quiz:
-    quiz = Quiz(
-        chapter_id=chapter_id, question=question, explanation=explanation, order=order
-    )
-    db.add(quiz)
+    db: Session, title: str, description: str | None, icon: str | None, order: int
+) -> Course:
+    """コースを新規作成する"""
+    course = Course(title=title, description=description, icon=icon, order=order)
+    db.add(course)
     db.commit()
-    db.refresh(quiz)
-    return quiz
+    db.refresh(course)
+    return course
 
 
 def create_chapter(
@@ -89,6 +93,18 @@ def create_chapter(
     db.commit()
     db.refresh(chapter)
     return chapter
+
+
+def create_quiz(
+    db: Session, chapter_id: int, question: str, explanation: str | None, order: int
+) -> Quiz:
+    quiz = Quiz(
+        chapter_id=chapter_id, question=question, explanation=explanation, order=order
+    )
+    db.add(quiz)
+    db.commit()
+    db.refresh(quiz)
+    return quiz
 
 
 def create_quiz_choice(
