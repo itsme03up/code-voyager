@@ -235,3 +235,81 @@
   font-size: 20px;
   color: #e0f7ff;
 }
+
+/* ===== 花火アニメーション ===== */
+.fireworks {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.firework {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+}
+
+.firework-0 { top: 20%; left: 20%; animation: launch 0.6s ease-out forwards; }
+.firework-1 { top: 15%; left: 50%; animation: launch 0.6s ease-out 0.2s forwards; }
+.firework-2 { top: 20%; left: 80%; animation: launch 0.6s ease-out 0.4s forwards; }
+.firework-3 { top: 50%; left: 30%; animation: launch 0.6s ease-out 0.1s forwards; }
+.firework-4 { top: 40%; left: 65%; animation: launch 0.6s ease-out 0.3s forwards; }
+.firework-5 { top: 60%; left: 45%; animation: launch 0.6s ease-out 0.5s forwards; }
+
+.firework:nth-child(n+7) {
+  animation-delay: 1.2s !important;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: explode 1s ease-out forwards;
+  animation-delay: inherit;
+}
+
+.firework-0 .particle { background: #00e5ff; }
+.firework-1 .particle { background: #ffd700; }
+.firework-2 .particle { background: #ff6b6b; }
+.firework-3 .particle { background: #7fff00; }
+.firework-4 .particle { background: #ff69b4; }
+.firework-5 .particle { background: #00e5ff; }
+
+.particle:nth-child(1) { --angle: 0deg; }
+.particle:nth-child(2) { --angle: 45deg; }
+.particle:nth-child(3) { --angle: 90deg; }
+.particle:nth-child(4) { --angle: 135deg; }
+.particle:nth-child(5) { --angle: 180deg; }
+.particle:nth-child(6) { --angle: 225deg; }
+.particle:nth-child(7) { --angle: 270deg; }
+.particle:nth-child(8) { --angle: 315deg; }
+
+@keyframes explode {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform:
+      translate(
+        calc(cos(var(--angle)) * 80px),
+        calc(sin(var(--angle)) * 80px)
+      )
+      scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes launch {
+  0% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* complete-containerをfireworksより前面に */
+.complete-container {
+  position: relative;
+  z-index: 1;
+}

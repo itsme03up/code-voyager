@@ -199,6 +199,17 @@ export const ChapterPage = () => {
         {/* COMPLETE フェーズ */}
         {phase === 'complete' && (
           <div className="complete-container">
+            {/* 花火 */}
+            <div className="fireworks">
+              {[...Array(12)].map((_, i) => (
+                <div key={i} className={`firework firework-${i % 6}`}>
+                  {[...Array(8)].map((_, j) => (
+                    <div key={j} className="particle" />
+                  ))}
+                </div>
+              ))}
+            </div>
+
             <div className="complete-title">MISSION COMPLETE</div>
             <div className="complete-reward">
               <span>🪙 +100 GOLD</span>
