@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react'
 
 type Progress = {
+  pilotName: string             // パイロット名
   completedChapters: number[]  // 完了したチャプターのID一覧
   level: number                // 現在のレベル
   totalXP: number              // 累計経験値
@@ -11,6 +12,7 @@ type Progress = {
 }
 
 const INITIAL_PROGRESS: Progress = {
+  pilotName: '',
   completedChapters: [],
   level: 1,
   totalXP: 0,
@@ -31,6 +33,10 @@ export const useProgress = () => {
   useEffect(() => {
     localStorage.setItem('tanuki-progress', JSON.stringify(progress))
   }, [progress])
+
+  const setPilotName = (name: string) => {
+    setProgress((prev) => ({ ...prev, pilotName: name }))
+  }
 
   // チャプター完了時の処理
   const completeChapter = (chapterId: number): { levelUp: boolean, newLevel: number } => {
@@ -67,5 +73,5 @@ export const useProgress = () => {
     return progress.completedChapters.includes(chapterId)
   }
 
-  return { progress, completeChapter, isUnlocked, isCompleted }
+  return { progress, setPilotName, completeChapter, isUnlocked, isCompleted }
 }

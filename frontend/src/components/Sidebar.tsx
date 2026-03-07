@@ -71,8 +71,8 @@ export const Sidebar = () => {
         })}
       </nav>
 
-      <div className="sidebar-footer">
-        SYSTEM v0.1.0 // ONLINE
+      <div className="sidebar-footer" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
+        👤 {progress.pilotName || 'PILOT'} // PROFILE
       </div>
     </aside>
   )
