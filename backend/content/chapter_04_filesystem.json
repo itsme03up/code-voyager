@@ -1,0 +1,102 @@
+{
+  "chapter_id": 4,
+  "quizzes": [
+    {
+      "question": "現在いるディレクトリのパスを表示するコマンドはどれか？",
+      "explanation": "pwdはPrint Working Directoryの略。現在の作業ディレクトリの絶対パスを表示する。",
+      "order": 1,
+      "choices": [
+        { "text": "pwd", "is_correct": true },
+        { "text": "ls", "is_correct": false },
+        { "text": "cd", "is_correct": false },
+        { "text": "echo", "is_correct": false }
+      ]
+    },
+    {
+      "question": "/etc ディレクトリには何が格納されているか？",
+      "explanation": "/etcはシステムの設定ファイルが格納されるディレクトリ。FHSで定義されている。",
+      "order": 2,
+      "choices": [
+        { "text": "システム設定ファイル", "is_correct": true },
+        { "text": "ユーザーのホームディレクトリ", "is_correct": false },
+        { "text": "一時ファイル", "is_correct": false },
+        { "text": "カーネルファイル", "is_correct": false }
+      ]
+    },
+    {
+      "question": "ルートディレクトリを表す記号はどれか？",
+      "explanation": "Linuxのファイルシステムは/（スラッシュ）をルートとした木構造になっている。",
+      "order": 3,
+      "choices": [
+        { "text": "/", "is_correct": true },
+        { "text": "~", "is_correct": false },
+        { "text": ".", "is_correct": false },
+        { "text": "..", "is_correct": false }
+      ]
+    },
+    {
+      "question": "ホームディレクトリを表す記号はどれか？",
+      "explanation": "~はホームディレクトリの省略表記。cd ~でホームに戻れる。",
+      "order": 4,
+      "choices": [
+        { "text": "~", "is_correct": true },
+        { "text": "/", "is_correct": false },
+        { "text": ".", "is_correct": false },
+        { "text": "*", "is_correct": false }
+      ]
+    },
+    {
+      "question": "一時ファイルが格納されるディレクトリはどれか？",
+      "explanation": "/tmpは再起動時に削除される一時ファイル置き場。誰でも読み書きできる。",
+      "order": 5,
+      "choices": [
+        { "text": "/tmp", "is_correct": true },
+        { "text": "/var", "is_correct": false },
+        { "text": "/usr", "is_correct": false },
+        { "text": "/opt", "is_correct": false }
+      ]
+    }
+  ],
+  "terminals": [
+    {
+      "description": "ホームディレクトリに移動するコマンドを入力してください",
+      "command_template": "___",
+      "answer": "cd ~",
+      "hint": "cdコマンドと~を組み合わせる",
+      "explanation": "cd ~でホームディレクトリに移動できる。cdだけでも同じ効果がある。",
+      "order": 1
+    },
+    {
+      "description": "現在のディレクトリのファイルを詳細表示するコマンドを入力してください",
+      "command_template": "___",
+      "answer": "ls -l",
+      "hint": "lsコマンドに詳細表示のオプションをつける",
+      "explanation": "ls -lで権限・所有者・サイズ・日時などの詳細情報が表示される。",
+      "order": 2
+    },
+    {
+      "description": "/var/logディレクトリに移動するコマンドを入力してください",
+      "command_template": "cd ___",
+      "answer": "cd /var/log",
+      "hint": "絶対パスで指定する",
+      "explanation": "/var/logはシステムのログファイルが格納されるディレクトリ。",
+      "order": 3
+    },
+    {
+      "description": "隠しファイルを含む全ファイルを表示するコマンドを入力してください",
+      "command_template": "___",
+      "answer": "ls -a",
+      "hint": "lsコマンドにallのオプションをつける",
+      "explanation": "ls -aで.から始まる隠しファイルも含めて全ファイルが表示される。",
+      "order": 4
+    },
+    {
+      "description": "現在のディレクトリのパスを表示するコマンドを入力してください",
+      "command_template": "___",
+      "answer": "pwd",
+      "hint": "Print Working Directoryの略",
+      "explanation": "pwdで現在作業しているディレクトリの絶対パスが表示される。",
+      "order": 5
+    }
+  ]
+}

@@ -44,6 +44,7 @@ class CourseBase(BaseModel):
     description: str | None = None
     icon: str | None = None
     order: int
+    category: str | None = None
 
 
 class CourseResponse(CourseBase):

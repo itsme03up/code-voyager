@@ -11,13 +11,13 @@ def seed():
     db = SessionLocal()
     try:
         # ===========================
-        # Linux: ファイルシステム (chapter_id=5)
+        # Linux: ファイルシステム (chapter_id=4)
         # ===========================
 
         # Q1
         q1 = create_quiz(
             db,
-            chapter_id=5,
+            chapter_id=4,
             question="現在いるディレクトリのパスを表示するコマンドはどれか？",
             explanation="pwdはPrint Working Directoryの略。現在の作業ディレクトリの絶対パスを表示する。",
             order=1
@@ -30,7 +30,7 @@ def seed():
         # Q2
         q2 = create_quiz(
             db,
-            chapter_id=5,
+            chapter_id=4,
             question="/etc ディレクトリには何が格納されているか？",
             explanation="/etcはシステムの設定ファイルが格納されるディレクトリ。FHSで定義されている。",
             order=2
@@ -43,7 +43,7 @@ def seed():
         # Q3
         q3 = create_quiz(
             db,
-            chapter_id=5,
+            chapter_id=4,
             question="ルートディレクトリを表す記号はどれか？",
             explanation="Linuxのファイルシステムは/（スラッシュ）をルートとした木構造になっている。",
             order=3
@@ -56,7 +56,7 @@ def seed():
         # Q4
         q4 = create_quiz(
             db,
-            chapter_id=5,
+            chapter_id=4,
             question="ホームディレクトリを表す記号はどれか？",
             explanation="~はホームディレクトリの省略表記。cd ~でホームに戻れる。",
             order=4
@@ -69,7 +69,7 @@ def seed():
         # Q5
         q5 = create_quiz(
             db,
-            chapter_id=5,
+            chapter_id=4,
             question="一時ファイルが格納されるディレクトリはどれか？",
             explanation="/tmpは再起動時に削除される一時ファイル置き場。誰でも読み書きできる。",
             order=5
@@ -85,7 +85,7 @@ def seed():
 
         create_terminal(
             db,
-            chapter_id=5,
+            chapter_id=4,
             description="ホームディレクトリに移動するコマンドを入力してください",
             command_template="___",
             answer="cd ~",
@@ -96,7 +96,7 @@ def seed():
 
         create_terminal(
             db,
-            chapter_id=5,
+            chapter_id=4,
             description="現在のディレクトリのファイルを詳細表示するコマンドを入力してください",
             command_template="___",
             answer="ls -l",
@@ -107,7 +107,7 @@ def seed():
 
         create_terminal(
             db,
-            chapter_id=5,
+            chapter_id=4,
             description="/var/logディレクトリに移動するコマンドを入力してください",
             command_template="cd ___",
             answer="cd /var/log",
@@ -118,7 +118,7 @@ def seed():
 
         create_terminal(
             db,
-            chapter_id=5,
+            chapter_id=4,
             description="隠しファイルを含む全ファイルを表示するコマンドを入力してください",
             command_template="___",
             answer="ls -a",
@@ -129,7 +129,7 @@ def seed():
 
         create_terminal(
             db,
-            chapter_id=5,
+            chapter_id=4,
             description="現在のディレクトリのパスを表示するコマンドを入力してください",
             command_template="___",
             answer="pwd",
