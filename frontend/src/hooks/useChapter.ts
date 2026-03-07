@@ -7,12 +7,10 @@ const API_URL = 'http://localhost:8000'
 
 export const useChapter = (chapterId: number) => {
   const [chapter, setChapter] = useState<Chapter | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     axios.get(`${API_URL}/api/chapters/${chapterId}`).then(res => setChapter(res.data))
   }, [chapterId])
 
-  return { chapter, loading, error }
+  return { chapter }
 }

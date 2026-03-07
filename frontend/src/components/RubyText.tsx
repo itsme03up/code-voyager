@@ -20,7 +20,7 @@ export const RubyText = ({ text }: Props) => {
     // ふりがなが続く場合はrubyタグで囲む
     const nextPart = parts[index + 1]
     if (nextPart !== undefined) {
-      const kanji = part.slice(-1) === '' ? part : part.match(/[^\x00-\x7F]+$/)
+      const kanji = part.match(/[一-龯々]+$/)
       const before = kanji ? part.slice(0, part.length - kanji[0].length) : part
 
       if (kanji) {
@@ -40,5 +40,3 @@ export const RubyText = ({ text }: Props) => {
 
   return <span>{elements}</span>
 }
-
-const rubyRegex = /<ruby>(.*?)<rt>(.*?)<\/rt><\/ruby>/g
