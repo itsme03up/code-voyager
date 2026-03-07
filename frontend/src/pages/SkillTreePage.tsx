@@ -8,19 +8,23 @@ type Props = {
   courses: Course[]
 }
 
+const CATEGORY_LABELS: Record<string, string> = {
+  fundamentals: 'FUNDAMENTALS',
+  programming_language: 'PROGRAMMING LANGUAGE',
+  container: 'CONTAINER',
+  cloud: 'CLOUD',
+  iac: 'IaC',
+  cicd: 'CI/CD',
+}
+
 export const SkillTreePage = ({ courses }: Props) => {
   const navigate = useNavigate()
   const { isCompleted, progress } = useProgress()
 
-  // コースの最初のチャプターが解放されているか確認
   const isCourseUnlocked = (course: Course): boolean => {
     if (course.chapters.length === 0) return false
     const firstChapter = course.chapters[0]
-
-    // 依存関係がなければ解放済み
     if (firstChapter.dependency_ids.length === 0) return true
-
-    // 全ての前提チャプターが完了していれば解放
     return firstChapter.dependency_ids.every((depId) =>
       progress.completedChapters.includes(depId)
     )
@@ -31,6 +35,14 @@ export const SkillTreePage = ({ courses }: Props) => {
     return course.chapters.every((ch) => isCompleted(ch.id))
   }
 
+  // カテゴリでグループ化
+  const categoryOrder = ['fundamentals', 'programming_language', 'container', 'cloud', 'iac', 'cicd']
+  const grouped = categoryOrder.reduce((acc, cat) => {
+    const filtered = courses.filter((c) => c.category === cat)
+    if (filtered.length > 0) acc[cat] = filtered
+    return acc
+  }, {} as Record<string, Course[]>)
+
   return (
     <div className="skilltree-wrapper">
       <div className="skilltree-header">
@@ -38,25 +50,43 @@ export const SkillTreePage = ({ courses }: Props) => {
         <p className="skilltree-subtitle">// SELECT MISSION</p>
       </div>
 
-      <div className="skilltree-grid">
-        {courses.map((course) => {
-          const unlocked = isCourseUnlocked(course)
-          const completed = isCourseCompleted(course)
+      <div className="skilltree-roadmap">
+        {categoryOrder.filter((cat) => grouped[cat]).map((cat, catIndex) => (
+          <div key={cat} className="skilltree-category-block">
+            {/* カテゴリ間のライン */}
+            {catIndex > 0 && (
+              <div className="skilltree-connector">
+                <div className="connector-line" />
+              </div>
+            )}
 
-          return (
-            <div
-              key={course.id}
-              className={`skilltree-node ${completed ? 'completed' : ''} ${unlocked && !completed ? 'unlocked' : ''} ${!unlocked ? 'locked' : ''}`}
-              onClick={() => unlocked && navigate(`/courses/${course.id}`)}
-            >
-              <div className="node-icon">{course.icon}</div>
-              <div className="node-title">{course.title}</div>
-              <div className="node-desc">{course.description}</div>
-              {completed && <div className="node-badge">[ CLEAR ]</div>}
-              {!unlocked && <div className="node-lock">🔒</div>}
+            {/* カテゴリラベル */}
+            <div className="skilltree-category-label">
+              {CATEGORY_LABELS[cat] || cat.toUpperCase()}
             </div>
-          )
-        })}
+
+            {/* コースノード群 */}
+            <div className="skilltree-nodes-row">
+              {grouped[cat].map((course) => {
+                const unlocked = isCourseUnlocked(course)
+                const completed = isCourseCompleted(course)
+
+                return (
+                  <div
+                    key={course.id}
+                    className={`skilltree-node ${completed ? 'completed' : ''} ${unlocked && !completed ? 'unlocked' : ''} ${!unlocked ? 'locked' : ''}`}
+                    onClick={() => unlocked && navigate(`/courses/${course.id}`)}
+                  >
+                    <div className="node-icon">{course.icon}</div>
+                    <div className="node-title">{course.title}</div>
+                    {completed && <div className="node-badge">[ CLEAR ]</div>}
+                    {!unlocked && <div className="node-lock">🔒</div>}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )

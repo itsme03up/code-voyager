@@ -1,5 +1,3 @@
-/* src/pages/SkillTreePage.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
 
 .skilltree-wrapper {
@@ -14,7 +12,6 @@
   font-family: 'Share Tech Mono', monospace;
 }
 
-/* 星空背景 */
 .skilltree-wrapper::before {
   content: '';
   position: fixed;
@@ -27,9 +24,6 @@
     radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.8) 0%, transparent 100%),
     radial-gradient(1px 1px at 20% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
     radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.6) 0%, transparent 100%),
-    radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.7) 0%, transparent 100%),
-    radial-gradient(1px 1px at 40% 90%, rgba(255,255,255,0.5) 0%, transparent 100%),
-    radial-gradient(1px 1px at 15% 45%, rgba(255,255,255,0.6) 0%, transparent 100%),
     radial-gradient(2px 2px at 25% 30%, rgba(0,229,255,0.4) 0%, transparent 100%),
     radial-gradient(2px 2px at 75% 60%, rgba(0,229,255,0.3) 0%, transparent 100%),
     radial-gradient(2px 2px at 55% 85%, rgba(255,215,0,0.3) 0%, transparent 100%);
@@ -39,7 +33,7 @@
 
 .skilltree-header {
   text-align: center;
-  margin-bottom: 56px;
+  margin-bottom: 48px;
   position: relative;
   z-index: 1;
 }
@@ -57,50 +51,69 @@
   font-size: 11px;
   color: #1a8fb5;
   letter-spacing: 0.3em;
-  text-transform: uppercase;
   margin-top: 8px;
 }
 
-/* ノード縦並び */
-.skilltree-nodes {
+/* ロードマップ全体 */
+.skilltree-roadmap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  z-index: 1;
-}
-
-.skilltree-node-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* ノード間ライン */
-.skilltree-line {
-  width: 2px;
-  height: 60px;
-  background: #0d2a3a;
-}
-
-.skilltree-line.unlocked {
-  background: linear-gradient(to bottom, #ffd700, #1a8fb5);
-  box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
-}
-
-/* グリッドレイアウト */
-.skilltree-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 24px;
   width: 100%;
-  max-width: 900px;
+  max-width: 800px;
   position: relative;
   z-index: 1;
 }
 
+/* カテゴリブロック */
+.skilltree-category-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* カテゴリ間のライン */
+.skilltree-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.connector-line {
+  width: 2px;
+  height: 48px;
+  background: linear-gradient(to bottom, #1a8fb5, #0d4f6e);
+  box-shadow: 0 0 8px rgba(26, 143, 181, 0.4);
+}
+
+/* カテゴリラベル */
+.skilltree-category-label {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: #1a8fb5;
+  border: 1px solid #0d4f6e;
+  border-radius: 4px;
+  padding: 4px 16px;
+  margin-bottom: 16px;
+  background: rgba(13, 79, 110, 0.2);
+}
+
+/* ノード横並び */
+.skilltree-nodes-row {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+/* ノード */
 .skilltree-node {
-  aspect-ratio: 1;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   border: 2px solid #0d2a3a;
   background: radial-gradient(circle, #0a1520 0%, #050a0e 100%);
@@ -112,7 +125,7 @@
   transition: all 0.4s ease;
   position: relative;
   gap: 6px;
-  padding: 16px;
+  padding: 12px;
 }
 
 .skilltree-node::before {
@@ -128,21 +141,17 @@
   border-color: #1a8fb5;
   background: radial-gradient(circle, #0d2a3a 0%, #050a0e 100%);
   cursor: pointer;
-  box-shadow:
-    0 0 20px rgba(26, 143, 181, 0.4),
-    inset 0 0 20px rgba(26, 143, 181, 0.1);
+  box-shadow: 0 0 20px rgba(26,143,181,0.4), inset 0 0 20px rgba(26,143,181,0.1);
 }
 
 .skilltree-node.unlocked::before {
-  border-color: rgba(26, 143, 181, 0.3);
+  border-color: rgba(26,143,181,0.3);
   animation: pulse-blue 2s infinite;
 }
 
 .skilltree-node.unlocked:hover {
   border-color: #00e5ff;
-  box-shadow:
-    0 0 40px rgba(0, 229, 255, 0.6),
-    inset 0 0 30px rgba(0, 229, 255, 0.15);
+  box-shadow: 0 0 40px rgba(0,229,255,0.6), inset 0 0 30px rgba(0,229,255,0.15);
   transform: scale(1.06);
 }
 
@@ -150,24 +159,20 @@
   border-color: #ffd700;
   background: radial-gradient(circle, #1a1200 0%, #050a0e 100%);
   cursor: pointer;
-  box-shadow:
-    0 0 30px rgba(255, 215, 0, 0.5),
-    inset 0 0 20px rgba(255, 215, 0, 0.1);
+  box-shadow: 0 0 30px rgba(255,215,0,0.5), inset 0 0 20px rgba(255,215,0,0.1);
 }
 
 .skilltree-node.completed::before {
-  border-color: rgba(255, 215, 0, 0.4);
+  border-color: rgba(255,215,0,0.4);
   animation: pulse-gold 2s infinite;
 }
 
-.skilltree-node.locked {
-  opacity: 0.3;
-}
+.skilltree-node.locked { opacity: 0.3; }
 
-.node-icon { font-size: 32px; }
+.node-icon { font-size: 28px; }
 
 .node-title {
-  font-size: 12px;
+  font-size: 11px;
   color: #e0f7ff;
   font-family: 'Share Tech Mono', monospace;
   letter-spacing: 0.05em;
@@ -179,18 +184,27 @@
   font-size: 10px;
   color: #4a9ab5;
   text-align: center;
-  font-family: 'Share Tech Mono', monospace;
 }
 
 .node-badge {
   font-size: 9px;
   letter-spacing: 0.15em;
   color: #ffd700;
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+  text-shadow: 0 0 8px rgba(255,215,0,0.8);
 }
 
 .node-lock {
   position: absolute;
-  bottom: 16px;
-  font-size: 14px;
+  bottom: 12px;
+  font-size: 12px;
+}
+
+@keyframes pulse-blue {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,229,255,0.3); }
+  50%       { box-shadow: 0 0 0 8px rgba(0,229,255,0); }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,215,0,0.4); }
+  50%       { box-shadow: 0 0 0 10px rgba(255,215,0,0); }
 }

@@ -23,6 +23,7 @@ export type Course = {
   description: string | null
   icon: string | null
   order: number
+  category: string | null  // 追加
   chapters: Chapter[]
 }
 
