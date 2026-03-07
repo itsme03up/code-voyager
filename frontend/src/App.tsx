@@ -8,6 +8,8 @@ import { ChapterPage } from './pages/ChapterPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { PilotNameModal } from './components/PilotNameModal'
 import { useProgress } from './hooks/useProgress'
+import { ColumnsPage } from './pages/ColumnsPage'
+import { ColumnDetailPage } from './pages/ColumnDetailPage'
 
 function App() {
   const { progress, setPilotName } = useProgress()
@@ -31,6 +33,8 @@ function App() {
           <Route path="/courses/:id" element={<CoursePage />} />
           <Route path="/chapters/:id" element={<ChapterPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/columns" element={<ColumnsPage />} />
+          <Route path="/columns/:id" element={<ColumnDetailPage />} />
         </Routes>
       </Layout>
     </>

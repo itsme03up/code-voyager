@@ -111,3 +111,14 @@ class Terminal(Base):
     order = Column(Integer, nullable=False, default=0)
 
     chapter = relationship("Chapter", back_populates="terminals")
+
+
+class Column(Base):
+    __tablename__ = "columns"
+
+    id = Column(Integer, primary_key=True, index=True)
+    chapter_id = Column(Integer, ForeignKey("chapters.id"), nullable=False)
+    title = Column(String(200), nullable=False)
+    content = Column(Text, nullable=False)
+    category = Column(String(50), nullable=True)  # 'history' / 'tips' / 'trivia'
+    order = Column(Integer, default=0)

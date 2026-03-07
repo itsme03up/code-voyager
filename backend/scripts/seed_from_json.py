@@ -6,7 +6,13 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from app.database import SessionLocal
-from app.cruds.script import create_quiz, create_quiz_choice, create_terminal
+from app.cruds.script import (
+    create_quiz,
+    create_quiz_choice,
+    create_terminal,
+    create_column,
+)
+
 
 def seed_from_json(filepath: str):
     db = SessionLocal()
@@ -38,6 +44,16 @@ def seed_from_json(filepath: str):
                 hint=t['hint'],
                 explanation=t['explanation'],
                 order=t['order']
+            )
+
+        for c in data.get("columns", []):
+            create_column(
+                db,
+                chapter_id=chapter_id,
+                title=c["title"],
+                content=c["content"],
+                category=c.get("category"),
+                order=c["order"],
             )
 
         print(f"✅ 完了！")

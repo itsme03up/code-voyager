@@ -209,15 +209,16 @@ export const ChapterPage = () => {
                 </div>
               ))}
             </div>
-
             <div className="complete-title">MISSION COMPLETE</div>
             <div className="complete-reward">
               <span>🪙 +100 GOLD</span>
               <span>⭐ +100 XP</span>
             </div>
-            <button className="chapter-button" onClick={() => navigate(-1)}>
-              BACK TO MAP →
-            </button>
+            <div className="complete-buttons">
+              <button className="chapter-button" onClick={() => navigate(-1)}>
+                BACK TO MAP →
+              </button>
+            </div>
           </div>
         )}
 

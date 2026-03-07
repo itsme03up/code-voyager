@@ -9,6 +9,7 @@ from app.models.script import (
     QuizChoice,
     Terminal,
 )
+from app.models.script import Column as ColumnModel
 
 
 def get_quizzes_by_chapter(db: Session, chapter_id: int) -> list[Quiz]:
@@ -168,3 +169,39 @@ def create_script(db: Session, chapter_id: int, text: str, order: int) -> Script
     db.commit()
     db.refresh(script)
     return script
+
+
+def create_column(
+    db: Session,
+    chapter_id: int,
+    title: str,
+    content: str,
+    category: str | None,
+    order: int,
+):
+    col = ColumnModel(
+        chapter_id=chapter_id,
+        title=title,
+        content=content,
+        category=category,
+        order=order,
+    )
+    db.add(col)
+    db.commit()
+    db.refresh(col)
+    return col
+
+
+def get_columns_by_chapter(db: Session, chapter_id: int):
+    return (
+        db.query(ColumnModel)
+        .filter(ColumnModel.chapter_id == chapter_id)
+        .order_by(ColumnModel.order)
+        .all()
+    )
+
+
+def get_all_columns(db: Session):
+    return (
+        db.query(ColumnModel).order_by(ColumnModel.chapter_id, ColumnModel.order).all()
+    )

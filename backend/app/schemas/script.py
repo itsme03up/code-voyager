@@ -1,5 +1,5 @@
 # app/schemas/script.py
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 # --- Script ---
@@ -37,8 +37,6 @@ class ChapterResponse(ChapterBase):
 
 
 # --- Course ---
-
-
 class CourseBase(BaseModel):
     title: str
     description: str | None = None
@@ -79,8 +77,6 @@ class QuizResponse(BaseModel):
 
 
 # --- Terminal ---
-
-
 class TerminalResponse(BaseModel):
     id: int
     chapter_id: int
@@ -93,3 +89,14 @@ class TerminalResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class ColumnResponse(BaseModel):
+    id: int
+    chapter_id: int
+    title: str
+    content: str
+    category: str | None = None
+    order: int
+
+    model_config = ConfigDict(from_attributes=True)

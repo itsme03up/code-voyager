@@ -69,6 +69,13 @@ export const Sidebar = () => {
             </div>
           )
         })}
+        <div
+          className="sidebar-item"
+          onClick={() => navigate('/columns')}
+          style={{ marginTop: '1rem' }}
+        >
+          📖 コラム一覧
+        </div>
       </nav>
 
       <div className="sidebar-footer" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>

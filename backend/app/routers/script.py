@@ -9,6 +9,8 @@ from app.schemas.script import (
     TerminalResponse,
 )
 from app.cruds import script as crud
+from app.cruds.script import get_columns_by_chapter
+from app.schemas.script import ColumnResponse
 
 router = APIRouter(
     prefix="/api",
@@ -61,3 +63,15 @@ def get_quizzes(chapter_id: int, db: Session = Depends(get_db)):
 def get_terminals(chapter_id: int, db: Session = Depends(get_db)):
     """指定チャプターのターミナル問題一覧を取得する"""
     return crud.get_terminals_by_chapter(db, chapter_id)
+
+
+@router.get("/chapters/{chapter_id}/columns", response_model=list[ColumnResponse])
+def get_columns(chapter_id: int, db: Session = Depends(get_db)):
+    return get_columns_by_chapter(db, chapter_id)
+
+
+@router.get("/columns", response_model=list[ColumnResponse])
+def get_all_columns(db: Session = Depends(get_db)):
+    from app.cruds.script import get_all_columns as _get_all_columns
+
+    return _get_all_columns(db)
